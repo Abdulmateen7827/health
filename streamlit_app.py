@@ -1,7 +1,6 @@
 import streamlit as st
 import joblib
 import pandas as pd
-import numpy as np
 import plotly.graph_objects as go
 import plotly.express as px
 from datetime import datetime
@@ -53,10 +52,12 @@ st.markdown("""
         border-left: 5px solid #1f77b4;
     }
     .stSelectbox > div > div {
-        background-color: white;
+        background-color: #f0f2f6 !important;
+        color: #222 !important;
     }
     .stNumberInput > div > div > input {
-        background-color: white;
+        background-color: #f0f2f6 !important;
+        color: #222 !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -169,8 +170,15 @@ def create_confidence_chart(confidence_scores):
 
 def main():
     # Header
-    st.markdown('<h1 class="main-header">🧠 Mental Health Detection System</h1>', unsafe_allow_html=True)
-    st.markdown('<p style="text-align: center; font-size: 1.2rem; color: #666;">AI-Powered Mental Health Assessment using XGBoost</p>', unsafe_allow_html=True)
+    st.markdown(
+        '<h1 class="main-header">🧠 Mental Health Detection System</h1>',
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        '<p style="text-align: center; font-size: 1.2rem; color: #666;">'
+        'AI-Powered Mental Health Assessment using XGBoost</p>',
+        unsafe_allow_html=True
+    )
     
     # Load model
     model_components = load_model()
@@ -197,15 +205,23 @@ def main():
         """)
     
     # Main content
-    tab1, tab2, tab3 = st.tabs(["🔍 Patient Assessment", "📈 Model Performance", "ℹ️ About"])
+    tab1, tab2, tab3 = st.tabs([
+        "🔍 Patient Assessment",
+        "📈 Model Performance",
+        "ℹ️ About"
+    ])
     
     with tab1:
         st.markdown('<h2 class="sub-header">Patient Symptom Assessment</h2>', unsafe_allow_html=True)
         
         # Create form for patient data
         with st.form("patient_assessment_form"):
-            st.markdown('<div class="feature-section">', unsafe_allow_html=True)
-            st.markdown("### Emotional & Mood Symptoms")
+            st.markdown(
+                '<div class="feature-section">', unsafe_allow_html=True
+            )
+            st.markdown(
+                "### Emotional & Mood Symptoms"
+            )
             
             col1, col2 = st.columns(2)
             
@@ -259,10 +275,16 @@ def main():
                     help="Does the patient show respect for authority?"
                 )
             
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.markdown(
+                '</div>', unsafe_allow_html=True
+            )
             
-            st.markdown('<div class="feature-section">', unsafe_allow_html=True)
-            st.markdown("### Behavioral & Cognitive Symptoms")
+            st.markdown(
+                '<div class="feature-section">', unsafe_allow_html=True
+            )
+            st.markdown(
+                "### Behavioral & Cognitive Symptoms"
+            )
             
             col1, col2 = st.columns(2)
             
@@ -304,10 +326,16 @@ def main():
                     help="Does the patient tend to overthink situations?"
                 )
             
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.markdown(
+                '</div>', unsafe_allow_html=True
+            )
             
-            st.markdown('<div class="feature-section">', unsafe_allow_html=True)
-            st.markdown("### Functional Assessment (1-10 Scale)")
+            st.markdown(
+                '<div class="feature-section">', unsafe_allow_html=True
+            )
+            st.markdown(
+                "### Functional Assessment (1-10 Scale)"
+            )
             
             col1, col2, col3 = st.columns(3)
             
@@ -338,7 +366,9 @@ def main():
                     help="Rate the patient's optimism level (1=Very Pessimistic, 10=Very Optimistic)"
                 )
             
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.markdown(
+                '</div>', unsafe_allow_html=True
+            )
             
             # Submit button
             submitted = st.form_submit_button("🔮 Get Prediction", use_container_width=True)
@@ -373,12 +403,20 @@ def main():
             if result:
                 # Display prediction results
                 st.markdown('<div class="prediction-box">', unsafe_allow_html=True)
-                st.markdown(f"## 🎯 Predicted Diagnosis: **{result['prediction']}**")
-                st.markdown(f"**Confidence:** {result['confidence'][result['prediction']]:.1%}")
+                st.markdown(
+                    f"## 🎯 Predicted Diagnosis: **{result['prediction']}**"
+                )
+                st.markdown(
+                    f"**Confidence:** "
+                    f"{result['confidence'][result['prediction']]:.1%}"
+                )
                 st.markdown('</div>', unsafe_allow_html=True)
                 
                 # Confidence chart
-                st.plotly_chart(create_confidence_chart(result['confidence']), use_container_width=True)
+                st.plotly_chart(
+                    create_confidence_chart(result['confidence']),
+                    use_container_width=True
+                )
                 
                 # Detailed confidence scores
                 st.markdown("### 📊 Detailed Confidence Scores")
